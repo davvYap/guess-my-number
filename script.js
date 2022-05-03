@@ -4,6 +4,7 @@
 let secretNum = Math.trunc(Math.random() * 20) + 1; // need to add 1 behind because the range is from 0 ~ 19, not included 20
 
 let score = 20;
+let highscore = 0;
 
 // reset the color of number input & message font size
 document.querySelector('.guess').addEventListener('click', function () {
@@ -29,6 +30,10 @@ document.querySelector('.check').addEventListener('click', function () {
     document.querySelector('body').style.backgroundColor = '#60b347';
     document.querySelector('.number').style.fontSize = '8rem';
     document.querySelector('.number').style.width = '30rem';
+    if (score > highscore) {
+      highscore = score;
+      document.querySelector('.highscore').textContent = highscore;
+    }
 
     // when the number is greater than secret number
   } else if (
