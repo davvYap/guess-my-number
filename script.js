@@ -16,6 +16,7 @@ document.querySelector('.guess').addEventListener('click', function () {
   document.querySelector('.message').style.fontSize = '2rem';
 });
 
+// Added check button function
 document.querySelector('.check').addEventListener('click', function () {
   const guessNum = Number(document.querySelector('.guess').value);
   console.log(guessNum, typeof guessNum);
@@ -96,4 +97,46 @@ document.querySelector('.again').addEventListener('click', function () {
   document.querySelector('.number').style.fontSize = '6rem';
   document.querySelector('.number').style.width = '15rem';
   document.querySelector('body').style.backgroundColor = '#222';
+});
+
+// Added Enter key to check the value!
+document.addEventListener('keydown', function (e) {
+  console.log(e);
+  if (e.key === 'Enter') {
+    const guessNum = Number(document.querySelector('.guess').value);
+    console.log(guessNum, typeof guessNum);
+
+    if (!guessNum && score > 1) {
+      displayMessage('⛔No number is input!');
+      document.querySelector('.message').style.fontSize = '2.5rem';
+      document.querySelector('.guess').style.backgroundColor = '#ff3333';
+    } else if (guessNum === secretNum && score > 1) {
+      displayMessage('🎊You had guess the correct number!');
+      document.querySelector('.number').textContent = secretNum;
+      document.querySelector('body').style.backgroundColor = '#60b347';
+      document.querySelector('.number').style.fontSize = '8rem';
+      document.querySelector('.number').style.width = '30rem';
+      if (score > highscore) {
+        highscore = score;
+        document.querySelector('.highscore').textContent = highscore;
+      }
+    } else if (
+      guessNum !== secretNum &&
+      score > 1 &&
+      guessNum >= 1 &&
+      guessNum <= 20
+    ) {
+      score--;
+      document.querySelector('.score').textContent = score;
+      displayMessage(guessNum > secretNum ? '⬆️Too high!' : '⬇️Too low!'); // ternary operator which returns value
+    } else if (guessNum < 1 || guessNum > 20) {
+      displayMessage('Number in between 1 to 20 ❗❗❗');
+    } else {
+      score--;
+      document.querySelector('.score').textContent = 0;
+      displayMessage('👾You lose the game.');
+      document.querySelector('.message').style.fontSize = '2.5rem';
+      document.querySelector('.header').textContent = 'You lose !!!';
+    }
+  }
 });
