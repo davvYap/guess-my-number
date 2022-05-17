@@ -5,7 +5,17 @@ let secretNum = Math.trunc(Math.random() * 20) + 1; // need to add 1 behind beca
 
 let score = 20;
 let highscore = 0;
+let smallNum = 1;
+let bigNum = 20;
 
+//function to display the lower & upper number range for each guess
+const displayRange = function (smallNum, bigNum) {
+  document.querySelector(
+    '.between'
+  ).textContent = `(Between ${smallNum} and ${bigNum})`;
+};
+
+// function to display the messagea at the right box
 const displayMessage = function (message) {
   document.querySelector('.message').textContent = message;
 };
@@ -48,6 +58,12 @@ document.querySelector('.check').addEventListener('click', function () {
   ) {
     score--;
     document.querySelector('.score').textContent = score;
+    if (guessNum > secretNum) {
+      bigNum = guessNum;
+    } else {
+      smallNum = guessNum;
+    }
+    displayRange(smallNum, bigNum);
     displayMessage(guessNum > secretNum ? '⬆️Too high!' : '⬇️Too low!'); // ternary operator which returns value
 
     // when the number is greater than secret number
@@ -91,6 +107,7 @@ document.querySelector('.again').addEventListener('click', function () {
   secretNum = Math.trunc(Math.random() * 20) + 1;
   score = 20;
   document.querySelector('.score').textContent = score;
+  displayRange(1, 20);
   displayMessage('🤔 Start guessing...');
   document.querySelector('.guess').value = '';
   document.querySelector('.number').textContent = '?';
@@ -128,6 +145,12 @@ document.addEventListener('keydown', function (e) {
     ) {
       score--;
       document.querySelector('.score').textContent = score;
+      if (guessNum > secretNum) {
+        bigNum = guessNum;
+      } else {
+        smallNum = guessNum;
+      }
+      displayRange(smallNum, bigNum);
       displayMessage(guessNum > secretNum ? '⬆️Too high!' : '⬇️Too low!'); // ternary operator which returns value
     } else if (guessNum < 1 || guessNum > 20) {
       displayMessage('Number in between 1 to 20 ❗❗❗');
